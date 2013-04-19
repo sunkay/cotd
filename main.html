@@ -1,0 +1,33 @@
+<html ng-app>
+<head>
+  <title>Check out your device</title>
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
+</head>
+<body>
+  <h2>List of Devices</h2>
+  <div ng-controller="deviceListController">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Asset Tag</th>
+          <th>Owner</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in devices">
+          <td>{{item.name}}</td>
+          <td>{{item.assetTag}}</td>
+          <td>{{item.owner}}</td>
+          <td>{{item.desc}}</td>  
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+
+  <script src="cotd.js"></script>
+</body>
+</html>
