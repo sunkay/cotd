@@ -1,14 +1,27 @@
-// controllers
+// Global app module listing all its dependencies
+var cotdServices = angular.module('cotd', ['DeviceModule']);
 
-function deviceListController($scope)
-{
-    $scope.devices = [
-        {name: "iphone", assetTag:"a23456", owner:"dev", desc:"iOS4.2"},
-        {name: "loaner-laptop-1", assetTag:"a13936", owner:"dev", desc:""},
-        {name: "loaner-laptop-3", assetTag:"a43056", owner:"qa", desc:""},
-        {name: "android", assetTag:"a33756", owner:"dev", desc:"android2.4"},
-        {name: "galaxy tab", assetTag:"a53356", owner:"dev", desc:"android"},
-        {name: "loaner-laptop-2", assetTag:"a63556", owner:"qa", desc:""},
-        {name: "iphone", assetTag:"a73856", owner:"dev", desc:"iOS5"}
-    ];
+// setup mappings routes and templates
+function cotdRouteConfig($routeProvider){
+    $routeProvider.
+    when('/', {
+        controller: deviceListController, 
+        templateUrl: 'listDevices.html'
+    }).
+    otherwise({
+        redirectTo: '/'
+    });
 }
+
+cotdServices.config(cotdRouteConfig);
+
+// controllers
+function deviceListController($scope, Devices)
+{
+    $scope.devices = Devices.query();
+
+    $scope.remove = function(index){
+        $scope.devices.splice(index, 1);
+    }
+}
+
