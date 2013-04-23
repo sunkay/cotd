@@ -1,3 +1,37 @@
 <div ng-controller="addDeviceController">
-  Testing form
+  <form novalidate name="addDevice" class="form-horizontal">
+  	<div class="control-group">
+  		<label class="control-label">Name</label>
+  		<div class="controls">
+  			<input type="text" id="name" ng-model="device.name" placeholder="Enter Name">
+  		</div>
+  	</div>
+  	<div class="control-group">
+  		<label class="control-label">Asset Tag</label>
+  		<div class="controls">
+  			<input type="text" id="assetTag" ng-model="device.assetTag" placeholder="Enter asset tag">
+  		</div>
+  	</div>
+  	<div class="control-group">
+  		<label class="control-label">Owner</label>
+  		<div class="controls">
+  			<input type="text" id="owner" ng-model="device.owner" placeholder="Enter device owner">
+  		</div>
+  	</div> 	
+  	<div class="control-group">
+  		<label class="control-label">Description</label>
+  		<div class="controls">
+  			<input type="text" id="description" ng-model="device.description" placeholder="Enter description">
+  		</div>
+  	</div>
+  	<div class="control-group">
+  		<div class="controls">
+  			<button ng-click="add(device)" class="btn">Add</button>
+  		</div>
+  	</div>
+  </form>
+
+  <div>
+     device json = {{device | json}}
+  </div>
 </div>

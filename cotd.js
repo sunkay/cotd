@@ -31,5 +31,9 @@ function deviceListController($scope, Devices)
 
 function addDeviceController($scope)
 {
-    
+    //console.log("add-Field" + $scope.device.name);
+
+    $scope.add = function(device){
+        console.log(device);
+    }
 }
