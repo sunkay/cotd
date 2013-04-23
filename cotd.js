@@ -8,6 +8,10 @@ function cotdRouteConfig($routeProvider){
         controller: deviceListController, 
         templateUrl: 'listDevices.html'
     }).
+    when('/add', {
+        controller: addDeviceController,
+        templateUrl: 'addDevice.html'
+    }).
     otherwise({
         redirectTo: '/'
     });
@@ -25,3 +29,7 @@ function deviceListController($scope, Devices)
     }
 }
 
+function addDeviceController($scope)
+{
+    
+}
