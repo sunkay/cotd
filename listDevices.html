@@ -1,4 +1,7 @@
    <div ng-controller="deviceListController">
+    <div ng-hide="devices.length"> You have no devices setup. 
+      <a href="#/admin/add">Would you like to add a device</a>
+    </div>
     <table class="table">
       <thead>
         <tr>
@@ -14,7 +17,6 @@
           <td>{{item.assetTag}}</td>
           <td>{{item.owner}}</td>
           <td>{{item.desc}}</td>  
-          <!-- Action CRUD drop down -->
           <td><button ng-click="remove($index)"><i class="icon-trash"></i></button></td>
           <td><a href="#/view/{{item.id}}"><i class="icon-edit"></i></a></td>
         </tr>
