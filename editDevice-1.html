@@ -1,5 +1,5 @@
-<div>
-  <form novalidate name="addDevice" class="form-horizontal">
+<div ng-controller="editDeviceController">
+  <form novalidate name="editDevice" class="form-horizontal">
   	<div class="control-group">
   		<label class="control-label">Name</label>
   		<div class="controls">
@@ -26,8 +26,7 @@
   	</div>
   	<div class="control-group">
   		<div class="controls">
-  			<button ng-click="add(device)" ng-show="add" class="btn">Add</button>
-        <button ng-click="update(device)" ng-hide="add" class="btn">Edit</button>
+  			<button ng-click="edit(device)" class="btn">Add</button>
   		</div>
   	</div>
   </form>
