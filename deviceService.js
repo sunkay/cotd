@@ -5,8 +5,7 @@ var deviceModule = angular.module('DeviceModule', []);
 deviceModule.factory('Devices', function(){
     var items = {};
 
-    items.query = function(){
-        return [
+    items.data = [
         {id:0, name: "iphone", assetTag:"a23456", owner:"dev", desc:"iOS4.2"},
         {id:1, name: "loaner-laptop-1", assetTag:"a13936", owner:"dev", desc:""},
         {id:2, name: "loaner-laptop-3", assetTag:"a43056", owner:"qa", desc:""},
@@ -15,6 +14,14 @@ deviceModule.factory('Devices', function(){
         {id:5, name: "loaner-laptop-2", assetTag:"a63556", owner:"qa", desc:""},
         {id:6, name: "iphone", assetTag:"a73856", owner:"dev", desc:"iOS5"}
         ];
+
+    items.query = function(){
+        return items.data;
     }
+
+    items.add = function(device){
+        items.data.push(device);
+    }
+
     return items;
 });

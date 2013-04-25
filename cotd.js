@@ -29,11 +29,16 @@ function deviceListController($scope, Devices)
     }
 }
 
-function addDeviceController($scope)
+function addDeviceController($scope, $location, Devices)
 {
     //console.log("add-Field" + $scope.device.name);
 
     $scope.add = function(device){
+        device['id'] = (Devices.query().length)+1;
+        Devices.add(device);
         console.log(device);
+
+        // redirect to main screen
+        $location.path('#/');
     }
 }
