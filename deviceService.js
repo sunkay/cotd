@@ -23,5 +23,16 @@ deviceModule.factory('Devices', function(){
         items.data.push(device);
     }
 
+    items.update = function(device){
+        // find the selected device & update
+        items.data.forEach(function(item, i){
+            if(item.id == device.id){
+                // update                
+                items.data[i] = device; 
+                return;
+            }
+        });
+    }
+
     return items;
 });

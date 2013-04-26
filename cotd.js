@@ -36,13 +36,12 @@ function deviceListController($scope, Devices)
 function addDeviceController($scope, $location, Devices)
 {
     //console.log("add-Field" + $scope.device.name);
-    $scope.add=false;
+    $scope.add=true;
 
     $scope.add = function(device){
-        device['id'] = (Devices.query().length)+1;
+        if(!device) return;
+        device['id'] = (Devices.query().length);
         Devices.add(device);
-        console.log("In add addDeviceController");
-        console.log(device);
 
         // redirect to main screen
         $location.path('#/');
@@ -51,19 +50,20 @@ function addDeviceController($scope, $location, Devices)
 
 function editDeviceController($scope, $location, $routeParams, Devices)
 {
-    //console.log("add-Field" + $scope.device.name);
-    //$scope.device = null;
     // get the device based on parameter id
     var device = Devices.query()[$routeParams.id];
 
+    // set the add/edit flag
     $scope.add=false;
     
+    // deep copies the selected item into scope
     $scope.device = angular.copy(device);
 
     $scope.update = function(device){
-        //device['id'] = (Devices.query().length)+1;
-        //Devices.add(device);
+        if(!device) return;
         console.log("in EditCtrl add");
+
+        Devices.update(device);
 
         // redirect to main screen
         $location.path('#/');
