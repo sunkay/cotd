@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" ng-app="cotd">
+<head>
+  <meta charset="utf-8">
+  <title>Check out your device</title>
+  <link rel="stylesheet" href="css/app.css"/>
+  <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css"/>
+</head>
+<body>
+
+  <h2>Device Management</h2>
+  <div ng-view></div>
+
+  <div>app: v<span app-version></span></div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+  -->
+  <script src="lib/angular/angular.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+</body>
+</html>
