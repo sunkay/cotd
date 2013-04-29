@@ -1,0 +1,43 @@
+'use strict';
+
+/* Services */
+
+
+// Demonstrate how to register services
+// In this case it is a simple value service.
+angular.module('cotd.services', []).
+  value('version', '0.1')
+  .factory('Devices', function(){
+    var items = {};
+
+    items.data = [
+        {id:0, name: "iphone", assetTag:"a23456", owner:"dev", desc:"iOS4.2"},
+        {id:1, name: "loaner-laptop-1", assetTag:"a13936", owner:"dev", desc:""},
+        {id:2, name: "loaner-laptop-3", assetTag:"a43056", owner:"qa", desc:""},
+        {id:3, name: "android", assetTag:"a33756", owner:"dev", desc:"android2.4"},
+        {id:4, name: "galaxy tab", assetTag:"a53356", owner:"dev", desc:"android"},
+        {id:5, name: "loaner-laptop-2", assetTag:"a63556", owner:"qa", desc:""},
+        {id:6, name: "iphone", assetTag:"a73856", owner:"dev", desc:"iOS5"}
+        ];
+
+    items.query = function(){
+        return items.data;
+    }
+
+    items.add = function(device){
+        items.data.push(device);
+    }
+
+    items.update = function(device){
+        // find the selected device & update
+        items.data.forEach(function(item, i){
+            if(item.id == device.id){
+                // update                
+                items.data[i] = device; 
+                return;
+            }
+        });
+    }
+
+    return items;
+  });
