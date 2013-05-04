@@ -9,37 +9,101 @@ describe('my app', function() {
   });
 
 
-  it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
-    expect(browser().location().url()).toBe("/view1");
+  it('should automatically redirect to / when location hash/fragment is empty', function() {
+    expect(browser().location().url()).toBe("/");
   });
 
 
-  describe('view1', function() {
+  describe('DisplayList', function() {
 
     beforeEach(function() {
-      browser().navigateTo('#/view1');
+      browser().navigateTo('#/');
     });
 
 
-    it('should render view1 when user navigates to /view1', function() {
-      expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 1/);
+    it('should render DisplayDevices when user navigates to /#', function() {
+      expect(element('[ng-view] a').text()).
+        toMatch(/Would you like to add a new device/);
+      
+      expect(element('[ng-view] th').text()).
+        toMatch(/Name/);
+
+      // counting number of rows
+      expect(repeater('tbody tr').count()).toBe(7);
+
+      // matching the resulting elements in a column
+      expect(repeater('tbody tr').column("item.owner"))
+        .toEqual(["dev","dev","qa","dev","dev","qa","dev"]);
     });
+
+    // clicking one item in the table using :eq(0)
+    it("clicking remove link should remove device", function(){
+      element('tbody tr:eq(0) .icon-trash').click();
+      expect(repeater('tbody tr').count()).toBe(6);
+    });
+
+    // clicking a link should take you to add device URL, selection by id
+    it("clicking add Device link should take you to right screen", function(){
+      element('#addlink').click();
+      expect(browser().location().url()).toBe('/add');
+    });    
 
   });
 
 
-  describe('view2', function() {
+  describe('addDeviceView', function() {
 
     beforeEach(function() {
-      browser().navigateTo('#/view2');
+      browser().navigateTo('#/add');
     });
 
 
-    it('should render view2 when user navigates to /view2', function() {
-      expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 2/);
+    it('should render addDevice when user navigates to /add', function() {
+      expect(element('[ng-view] .control-label').text()).
+        toMatch("NameAsset TagOwnerDescription");
     });
+
+    // test for Add & subsequent expectation that the devices list has the added value
+    it('should add a Device when user enters values and submits them', function() {
+      input('device.name').enter('TestName');
+      input('device.assetTag').enter('TestAssetTag');
+      input('device.owner').enter('TestOwner');
+      input('device.desc').enter('TestDescription');
+      element('#addDevice').click();
+
+      // counting number of rows
+      expect(repeater('tbody tr').count()).toBe(8);
+
+      // matching the resulting elements in a column
+      expect(repeater('tbody tr').column("item.owner"))
+        .toEqual(["dev","dev","qa","dev","dev","qa","dev", "TestOwner"]);
+    });    
 
   });
+
+  describe('updateDeviceView', function() {
+
+    beforeEach(function() {
+      browser().navigateTo('#/edit/0');
+    });
+
+    // test for update & subsequent expectation that the devices list has the updated value
+    it('should update a Device when user enters values and submits them', function() {
+      input('device.name').enter('TestName');
+      input('device.assetTag').enter('TestAssetTag');
+      input('device.owner').enter('TestOwner');
+      input('device.desc').enter('TestDescription');
+      element('#updateDevice').click();
+
+      // counting number of rows
+      expect(repeater('tbody tr').count()).toBe(7);
+
+      // matching the resulting elements in a column
+      expect(repeater('tbody tr').column("item.owner"))
+        .toEqual(["TestOwner","dev","qa","dev","dev","qa","dev"]);
+    }); 
+
+  });
+
+
 });
