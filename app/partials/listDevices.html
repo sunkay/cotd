@@ -1,6 +1,6 @@
    <div ng-controller="deviceListController">
     <div> 
-      <a href="#/add">Would you like to add a new device</a>
+      <a id="addlink" href="#/add">Would you like to add a new device</a>
     </div>
     <table class="table">
       <thead>
@@ -11,7 +11,7 @@
           <th>Description</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="devices">
         <tr ng-repeat="item in devices">
           <td>{{item.name}}</td>
           <td>{{item.assetTag}}</td>
