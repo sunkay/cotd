@@ -18,8 +18,42 @@ exports.findById = function(req, res){
 
 exports.add = function(req,res){
     var dev = req.body;
-    console.log(JSON.stringify(dev));
     devices.push(dev);
+    //console.log(devices);
+    res.send([{status: '1'}]);
+};
+
+exports.update = function(req, res){
+    // get the device
+    var id = req.params.id;
+    var dev = req.body;
+    if(id != dev.id){
+        console.log("id's do not match for update");
+        res.send([{status: '0'}]);
+    }
+    console.log(dev);
+
+    // find the selected device & update
+    devices.forEach(function(item, i){
+        if(item.id == id){
+            // update         
+            console.log("match id: "+id)       
+            devices[i] = dev; 
+            console.log(devices);
+            res.send([{status: '1'}]);
+            return;
+        }
+    });
+    res.send([{status: '0'}]);
+};
+
+exports.delete = function(req, res){
+    var id = req.params.id;
+    devices = devices.filter(function(item){
+        return item.id != id;
+    });
+    console.log("DELETED \n");
     console.log(devices);
     res.send([{status: '1'}]);
+
 };
