@@ -9,42 +9,54 @@ var devices = [
         ];
 
 exports.findAll = function(req, res){
+    console.log("Info: findAll: GET Devices request recieved");
     res.send(devices)
 };
 
 exports.findById = function(req, res){
-    res.send(devices[req.params.id]);
+    console.log("Info: findById: GET: Id:", req.params.id);
+
+    // find the device with id
+    rid = req.params.id;
+    var device;
+    devices.forEach(function(item, i){
+        if(item.id == rid){
+            device = devices[i];
+        }
+    });
+
+    console.log("Info: findById: GET: device: ", device);
+    res.send(device);
 };
 
 exports.add = function(req,res){
     var dev = req.body;
+    console.log("Info: add: Post: device: ", dev);
     devices.push(dev);
-    //console.log(devices);
-    res.send([{status: '1'}]);
+    res.send({status: '1'});
 };
 
 exports.update = function(req, res){
     // get the device
     var id = req.params.id;
     var dev = req.body;
+    console.log("Info: update: PUT: device: ", dev, " Id:", id);
     if(id != dev.id){
-        console.log("id's do not match for update");
-        res.send([{status: '0'}]);
+        console.error("ERROR: update: id's do not match for update");
+        res.send({status: '0'});
     }
-    console.log(dev);
 
     // find the selected device & update
     devices.forEach(function(item, i){
         if(item.id == id){
             // update         
-            console.log("match id: "+id)       
             devices[i] = dev; 
-            console.log(devices);
-            res.send([{status: '1'}]);
+            console.log("Info: update: PUT: updating: ", item.id);
+            res.send({status: '1'});
             return;
         }
     });
-    res.send([{status: '0'}]);
+    res.send({status: '0'});
 };
 
 exports.delete = function(req, res){
@@ -52,8 +64,6 @@ exports.delete = function(req, res){
     devices = devices.filter(function(item){
         return item.id != id;
     });
-    console.log("DELETED \n");
-    console.log(devices);
-    res.send([{status: '1'}]);
-
+    console.log("Info: Deleted: id: ", id);
+    res.send({status: '1'});
 };

@@ -1,10 +1,12 @@
 var express = require('express'),
+    cors = require('cors'),
     devices = require('./routes/devices.js');
  
 var app = express();
 
 app.configure(function () {
     app.use(express.bodyParser());
+    app.use(cors());
 });
 
 //Devices CRUD

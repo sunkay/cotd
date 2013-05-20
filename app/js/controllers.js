@@ -2,50 +2,75 @@
 
 /* Controllers */
 
-angular.module('cotd.controllers', []).
-controller('addDeviceController', ['$scope', '$location', 'Devices', 
+angular.module('cotd.controllers', [])
+.controller('deviceListController', 
+    ['$scope', 'Devices', function($scope, Devices) {
+        $scope.devices = Devices.query(function success(){
+            console.log("deviceListController.query success");
+        }, function error(response){
+            console.log("DeviceListController.query: Request Failed " + response.status);
+            // access response headers
+            console.log(response.headers());
+        });
+
+        // Delete handler
+        $scope.remove = function(index){
+            var devId = $scope.devices[index].id;
+            console.log("deviceId to remove: " + devId);
+            Devices.delete({deviceId: devId}, function success(data, status){
+                console.log("Remove device succeeded");
+                $scope.devices.splice(index, 1);
+            }, function error(response){
+                console.log("Remove Device Failed Status: " + response.status);
+            });
+        }
+    }]) 
+.controller('addDeviceController', ['$scope', '$location', 'Devices', 
     function($scope, $location, Devices) {
-    //console.log("add-Field" + $scope.device.name);
     $scope.add=true;
 
     $scope.add = function(device){
         if(!device) return;
-        device['id'] = (Devices.query().length);
-        Devices.add(device);
 
-        // redirect to main screen
-        $location.path('#/');
+        var randomnumber=Math.floor(Math.random()*1001)
+        device['id'] = randomnumber;
+
+        var newDevice = new Devices(device);
+        newDevice.$save(function success(){
+            // redirect to main screen
+            $location.path('#/');
+        }, function error(response){
+            console.log("Add Device Failed: " + response.status);
+        });
     }
 }])
-.controller('deviceListController', 
-    ['$scope', 'Devices', function($scope, Devices) {
-        $scope.devices = Devices.query();
-
-        $scope.remove = function(index){
-            $scope.devices.splice(index, 1);
-        }
-    }])  
 .controller('editDeviceController', 
-    ['$scope', '$location', '$routeParams', 'Devices',function($scope, $location, $routeParams, Devices) {
+    ['$scope', '$location', '$routeParams', 'Devices',
+    function($scope, $location, $routeParams, Devices) {
+
+    console.log("Info: editDeviceController: ID:", $routeParams.id);
     // get the device based on parameter id
-    var device = Devices.query()[$routeParams.id];
+    var device = Devices.get({deviceId:$routeParams.id},angular.noop, 
+        function error(){
+            console.log("Error: editDeviceController: GET Id:", $routeParams.id);
+        });
+
+    console.log("Info: editDeviceController: device: ", device);
 
     // set the add/edit flag
     $scope.add=false;
     
-    // deep copies the selected item into scope
-    $scope.device = angular.copy(device);
+    $scope.device = device; 
 
     $scope.update = function(device){
         if(!device) return;
-        console.log("in EditCtrl add");
-
-        Devices.update(device);
-
-        // redirect to main screen
-        $location.path('#/');
+        Devices.update({deviceId:device.id}, device, function success(){
+            console.log("Info: editDeviceController: saved device", device);
+            // redirect to main screen
+            $location.path('#/');
+        }, function error(){
+            console.log("Error: editDeviceController: unable to update");
+        });
     }
 }])  
-.controller('MyCtrl2', [function() {
-
-}]);
+;
