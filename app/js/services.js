@@ -9,7 +9,7 @@ angular.module('cotd.services', [])
     delete $httpProvider.defaults.headers.common["X-Requested-With"];
   }])
   .value('version', '0.1')
-  .factory('Devices-rest', ['$resource', function($resource){
+  .factory('Devices', ['$resource', function($resource){
     return $resource('http://localhost\\:3000/devices/:deviceId',
         {},
         {update: {method:'PUT'}, isArray:false}

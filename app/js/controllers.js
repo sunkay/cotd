@@ -32,8 +32,11 @@ angular.module('cotd.controllers', [])
     $scope.add = function(device){
         if(!device) return;
 
-        var randomnumber=Math.floor(Math.random()*1001)
-        device['id'] = randomnumber;
+        // if device to add does not have and Id, create a random num id
+        if(device.id == undefined){
+            var randomnumber=Math.floor(Math.random()*1001);
+            device['id'] = randomnumber;
+        }
 
         var newDevice = new Devices(device);
         newDevice.$save(function success(){

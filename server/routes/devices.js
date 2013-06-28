@@ -1,5 +1,5 @@
 var devices = [
-        {id:0, name: "iphone", assetTag:"a23456", owner:"dev", desc:"iOS4.2"},
+        {id:0, name: "iphone-UT-record-dont-delete", assetTag:"a23456-UT-record", owner:"dev-UT-record", desc:"iOS4.2-UT-record"},
         {id:1, name: "loaner-laptop-1", assetTag:"a13936", owner:"dev", desc:""},
         {id:2, name: "loaner-laptop-3", assetTag:"a43056", owner:"qa", desc:""},
         {id:3, name: "android", assetTag:"a33756", owner:"dev", desc:"android2.4"},
@@ -66,4 +66,5 @@ exports.delete = function(req, res){
     });
     console.log("Info: Deleted: id: ", id);
     res.send({status: '1'});
+
 };
