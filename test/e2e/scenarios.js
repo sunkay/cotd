@@ -5,7 +5,7 @@
 describe('my app', function() {
 
   beforeEach(function() {
-    browser().navigateTo('../../app/index.html');
+    browser().navigateTo('index.html');
   });
 
 
@@ -29,7 +29,7 @@ describe('my app', function() {
         toMatch(/Name/);
 
       // counting number of rows
-      expect(repeater('tbody tr').count()).toBe(7);
+      expect(repeater('tbody tr').count()).toBe(8);
 
       // matching the resulting elements in a column
       expect(repeater('tbody tr').column("item.owner"))
@@ -39,7 +39,7 @@ describe('my app', function() {
     // clicking one item in the table using :eq(0)
     it("clicking remove link should remove device", function(){
       element('tbody tr:eq(0) .icon-trash').click();
-      expect(repeater('tbody tr').count()).toBe(6);
+      expect(repeater('tbody tr').count()).toBe(7);
     });
 
     // clicking a link should take you to add device URL, selection by id
